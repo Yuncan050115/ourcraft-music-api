@@ -1,0 +1,18 @@
+services:
+  music-api:
+    build: .
+    image: ghcr.io/yuncan050115/ourcraft-music-api:latest
+    container_name: ourcraft-music-api
+    restart: unless-stopped
+    ports:
+      - "3017:3017"
+    environment:
+      # Server-side NetEase cookie. Only needed for VIP tracks; leave unset for
+      # free playback, which is the default. Never commit a real cookie.
+      NCM_COOKIE: ${NCM_COOKIE:-}
+      # Comma-separated Referer/Origin allowlist. Unset = open to all callers.
+      ALLOWLIST: ${ALLOWLIST:-}
+      # Gate for /admin. Unset = the admin endpoint refuses everything.
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+      ADAPTER_PORT: "3017"
+    read_only: false
